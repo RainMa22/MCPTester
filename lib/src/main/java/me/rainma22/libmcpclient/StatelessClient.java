@@ -14,13 +14,15 @@ import org.json.JSONObject;
 
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
-
-public class JSONClient implements McpClient {
+/**
+ * NOT A STANDARD Client, just a simple client that expects JSON-only responses;
+ */
+public class StatelessClient implements McpClient {
     private McpClientCapabilities capabilities;
     private URL url;
     private HttpClient client = HttpClient.newHttpClient();
 
-    public JSONClient(McpClientCapabilities c, URL url) {
+    public StatelessClient(McpClientCapabilities c, URL url) {
         capabilities = c;
         this.url = url;
     }

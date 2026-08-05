@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import me.rainma22.constants.Headers;
+import me.rainma22.constants.MimeTypes;
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
 import me.rainma22.serversentevents.SSEChunk;
@@ -38,24 +40,32 @@ public class StreamableHttpClient implements McpClient {
                     .headers(capabilities.capabilitySpecificHttpHeaders(sessionId))
                     .POST(BodyPublishers.ofString(s))
                     .build(), BodyHandlers.ofString())
-                    .thenApply((res) -> {
-                        System.out.println(res.body());
-                        var text = Stream.of(res.body().split("\n\n"))
-                                .map(SSEChunk::fromString)
-                                .map(c -> c.getData())
-                                .filter(d -> {
-                                    try {
-                                        new JSONObject(d);
-                                        return true;
-                                    } catch (JSONException je) {
-                                        return false;
-                                    }
-                                })
-                                .findFirst()
-                                .get();
-
-                        this.sessionId = capabilities.getSessionId(res);
-                        return new Response(new JSONObject(text));
+                    .thenApplyAsync((res) -> {
+                        String contentType = res.headers().firstValue(Headers.CONTENT_TYPE_FIELD)
+                                .orElse(null);
+                        if (MimeTypes.JSON_MIMETYPE.equals(contentType)) {
+                            return new Response(new JSONObject(res.body()));
+                        } else if (MimeTypes.EVENT_STREAM_MIMETYPE.equals(contentType)) {
+                            var jsonObj = Stream.of(res.body().split("\n\n"))
+                                    .map(SSEChunk::fromString)
+                                    .map(c -> c.getData())
+                                    .filter(d -> {
+                                        try {
+                                            new JSONObject(d);
+                                            return true;
+                                        } catch (JSONException je) {
+                                            return false;
+                                        }
+                                    })
+                                    .map(JSONObject::new)
+                                    .filter(obj -> !obj.getString("method").startsWith("notification"))
+                                    .findFirst()
+                                    .get();
+                            this.sessionId = capabilities.getSessionId(res);
+                            return new Response(jsonObj);
+                        } else {
+                            throw new RuntimeException(String.format("Bad Content-Type field: %s.", contentType));
+                        }
                     })
                     .get();
         } catch (InterruptedException | ExecutionException | URISyntaxException e) {
