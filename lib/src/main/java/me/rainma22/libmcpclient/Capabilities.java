@@ -1,5 +1,7 @@
 package me.rainma22.libmcpclient;
 
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -10,7 +12,25 @@ import me.rainma22.jsonrpc.Request;
 
 public class Capabilities {
     public static final Map<String, McpClientCapabilities> CAPABILITIES_MAP = Map.of(
-            "20251125", new McpClientCapabilities() {
+            "2025-11-25", new McpClientCapabilities() {
+                private static final String MCP_SESSION_ID_FIELD = "MCP-Session-Id";
+
+                @Override
+                public String getVersion() {
+                    return "2025-11-25";
+                }
+
+                @Override
+                public String[] capabilitySpecificHttpHeaders(String sessionId){
+                    List<String> l = new ArrayList<>(List.of("MCP-Protocol-Version", getVersion()));
+                    l.addAll(sessionId != null ? List.of("MCP-Session-Id", sessionId) : List.of());
+                    return l.toArray(String[]::new);
+                }
+                @Override
+                public <T> String getSessionId(HttpResponse<T> res) {
+                    var fields = res.headers().map().get(MCP_SESSION_ID_FIELD);
+                    return fields == null ? null : fields.getFirst();
+                }
 
                 @Override
                 public Request ping() {

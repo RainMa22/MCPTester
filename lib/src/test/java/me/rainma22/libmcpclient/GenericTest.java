@@ -11,7 +11,7 @@ public class GenericTest {
     @Test
     public void test0() {
         try {
-            var client = new StreamableHttpClient(Capabilities.CAPABILITIES_MAP.get("20251125"),
+            var client = new StreamableHttpClient(Capabilities.CAPABILITIES_MAP.get("2025-11-25"),
                     URI.create("http://localhost:9090/mcp").toURL());
             Stream.of(
                     client.sendPing(),
@@ -27,7 +27,7 @@ public class GenericTest {
     @Test
     public void test1() {
         try {
-            JSONClient client = new JSONClient(Capabilities.CAPABILITIES_MAP.get("20251125"),
+            JSONClient client = new JSONClient(Capabilities.CAPABILITIES_MAP.get("2025-11-25"),
                     URI.create("http://localhost:9090/mcp").toURL());
             Stream.of(
                     client.sendPing(),
