@@ -2,9 +2,6 @@ package me.rainma22.jsonrpc;
 
 import java.util.List;
 
-import javax.lang.model.type.NullType;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import me.rainma22.utils.Toolinfo;
