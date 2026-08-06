@@ -21,6 +21,8 @@ public interface McpClient {
     void sendNotification(String notif) throws IOException;
 
     Response sendToolsCall(String tool, JSONObject params) throws IOException;
+
     Response sendPromptsGet(String prompt, JSONObject params) throws IOException;
+
     Response sendResourcesRead(String resource, JSONObject params) throws IOException;
 }
