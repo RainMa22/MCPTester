@@ -12,9 +12,14 @@ public class Request {
         object.put("id", id.toString());
     }
 
-    public Request(Object id, String Method) {
+    public Request(Object id, String method) {
         this(id);
-        setMethod(Method);
+        setMethod(method);
+    }
+
+    public Request(Object id, String method, JSONObject params) {
+        this(id, method);
+        setParams(params);
     }
 
     public void setMethod(String method) {

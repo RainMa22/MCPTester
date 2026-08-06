@@ -21,11 +21,12 @@ public class Capabilities {
                 }
 
                 @Override
-                public String[] capabilitySpecificHttpHeaders(String sessionId){
+                public String[] capabilitySpecificHttpHeaders(String sessionId) {
                     List<String> l = new ArrayList<>(List.of("MCP-Protocol-Version", getVersion()));
                     l.addAll(sessionId != null ? List.of("MCP-Session-Id", sessionId) : List.of());
                     return l.toArray(String[]::new);
                 }
+
                 @Override
                 public <T> String getSessionId(HttpResponse<T> res) {
                     var fields = res.headers().map().get(MCP_SESSION_ID_FIELD);
@@ -65,6 +66,29 @@ public class Capabilities {
                 @Override
                 public Request listResources() {
                     return new Request(UUID.randomUUID(), "resources/list");
+                }
+
+                @Override
+                public Request ToolsCall(String tool, JSONObject args) {
+                    return new Request(UUID.randomUUID(), "tools/call",
+                            new JSONObject(Map.of(
+                                    "name", tool,
+                                    "arguments", args)));
+                }
+
+                @Override
+                public Request promptsGet(String prompt, JSONObject args) {
+                    return new Request(UUID.randomUUID(), "prompts/get",
+                            new JSONObject(Map.of(
+                                    "name", prompt,
+                                    "arguments", args)));
+                }
+
+                @Override
+                public Request getResource(String resourceURI) {
+                    return new Request(UUID.randomUUID(), "resources/reads",
+                            new JSONObject(
+                                    Map.of("uri", resourceURI)));
                 }
 
             });

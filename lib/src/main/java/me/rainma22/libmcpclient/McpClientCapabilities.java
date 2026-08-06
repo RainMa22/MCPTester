@@ -2,6 +2,8 @@ package me.rainma22.libmcpclient;
 
 import java.net.http.HttpResponse;
 
+import org.json.JSONObject;
+
 import me.rainma22.jsonrpc.Request;
 
 public interface McpClientCapabilities {
@@ -20,5 +22,11 @@ public interface McpClientCapabilities {
     Request listPrompts();
 
     Request listResources();
+
+    Request ToolsCall(String tool, JSONObject args);
+
+    Request promptsGet(String prompt, JSONObject args);
+
+    Request getResource(String resourceURI);
 
 }

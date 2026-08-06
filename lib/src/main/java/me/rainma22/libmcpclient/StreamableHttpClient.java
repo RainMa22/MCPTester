@@ -11,7 +11,6 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import me.rainma22.constants.Headers;
