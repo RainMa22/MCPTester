@@ -58,7 +58,7 @@ public class StreamableHttpClient implements McpClient {
                                         }
                                     })
                                     .map(JSONObject::new)
-                                    .filter(obj -> !obj.getString("method").startsWith("notification"))
+                                    .filter(obj -> !obj.optString("method", "not a method").startsWith("notification"))
                                     .findFirst()
                                     .get();
                             this.sessionId = capabilities.getSessionId(res);
