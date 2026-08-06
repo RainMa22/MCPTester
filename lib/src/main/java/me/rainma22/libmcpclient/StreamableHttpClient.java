@@ -19,6 +19,7 @@ import me.rainma22.constants.MimeTypes;
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
 import me.rainma22.serversentevents.SSEChunk;
+import me.rainma22.utils.JSONUtils;
 
 public class StreamableHttpClient implements McpClient {
     private McpClientCapabilities capabilities;
@@ -48,15 +49,8 @@ public class StreamableHttpClient implements McpClient {
                         } else if (MimeTypes.EVENT_STREAM_MIMETYPE.equals(contentType)) {
                             var jsonObj = Stream.of(res.body().split("\n\n"))
                                     .map(SSEChunk::fromString)
-                                    .map(c -> c.getData())
-                                    .filter(d -> {
-                                        try {
-                                            new JSONObject(d);
-                                            return true;
-                                        } catch (JSONException je) {
-                                            return false;
-                                        }
-                                    })
+                                    .map(SSEChunk::getData)
+                                    .filter(JSONUtils::isValidJSON)
                                     .map(JSONObject::new)
                                     .filter(obj -> !obj.optString("method", "not a method").startsWith("notification"))
                                     .findFirst()
