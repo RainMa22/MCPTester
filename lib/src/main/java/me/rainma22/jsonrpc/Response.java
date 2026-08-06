@@ -3,7 +3,7 @@ package me.rainma22.jsonrpc;
 import org.json.JSONObject;
 
 public class Response {
-    JSONObject object;
+    protected JSONObject object;
 
     public Response(JSONObject obj) {
         this.object = obj;
@@ -16,4 +16,5 @@ public class Response {
     public String toString() {
         return object.toString();
     }
+
 }

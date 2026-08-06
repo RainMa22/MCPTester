@@ -27,6 +27,6 @@ public interface McpClientCapabilities {
 
     Request promptsGet(String prompt, JSONObject args);
 
-    Request getResource(String resourceURI);
+    Request resourcesRead(String resourceURI);
 
 }

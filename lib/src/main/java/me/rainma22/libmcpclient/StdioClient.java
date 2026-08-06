@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
+import me.rainma22.jsonrpc.ToolListResponse;
 
 public class StdioClient implements McpClient {
     private McpClientCapabilities capabilities;
@@ -22,17 +23,22 @@ public class StdioClient implements McpClient {
         out = o;
     }
 
+    private void writeAndFlush(Request s) throws IOException {
+        out.write(s.getBytes());
+        out.flush();
+    }
+
     private Response readInput() throws IOException {
         while (true) {
             while (!scanner.hasNextLine()) {
-                try{
+                try {
                     Thread.sleep(100);
-                }catch(InterruptedException e){
-                    //ignored
+                } catch (InterruptedException e) {
+                    // ignored
                 }
             }
             JSONObject object = new JSONObject(scanner.nextLine());
-            if(object.getString("method").startsWith("notification")){
+            if (object.getString("method").startsWith("notification")) {
                 continue;
                 // skip notification
             } else {
@@ -43,44 +49,55 @@ public class StdioClient implements McpClient {
 
     @Override
     public Response sendPing() throws IOException {
-        out.write(capabilities.ping().toString().getBytes());
-        out.flush();
-
+        writeAndFlush(capabilities.ping());
         return readInput();
     }
 
     @Override
     public Response sendInitialize() throws IOException {
-        out.write(capabilities.initialize().toString().getBytes());
-        out.flush();
+        writeAndFlush(capabilities.initialize());
         return readInput();
     }
 
     @Override
-    public Response sendListTools() throws IOException {
-        out.write(capabilities.listTools().toString().getBytes());
-        out.flush();
-        return readInput();
+    public ToolListResponse sendListTools() throws IOException {
+        writeAndFlush(capabilities.listTools());
+        return new ToolListResponse(readInput());
     }
 
     @Override
     public Response sendListPrompts() throws IOException {
-        out.write(capabilities.listPrompts().toString().getBytes());
-        out.flush();
+        writeAndFlush(capabilities.listPrompts());
         return readInput();
     }
 
     @Override
     public Response sendListResources() throws IOException {
-        out.write(capabilities.listResources().toString().getBytes());
-        out.flush();
+        writeAndFlush(capabilities.listResources());
         return readInput();
     }
 
     @Override
     public void sendNotification(String notif) throws IOException {
-        out.write(new Request(UUID.randomUUID(), notif).toString().getBytes());
-        out.flush();
+        writeAndFlush(new Request(UUID.randomUUID(), notif));
+    }
+
+    @Override
+    public Response sendToolsCall(String tool, JSONObject params) throws IOException {
+        writeAndFlush(capabilities.ToolsCall(tool, params));
+        return readInput();
+    }
+
+    @Override
+    public Response sendPromptsGet(String prompt, JSONObject params) throws IOException {
+        writeAndFlush(capabilities.promptsGet(prompt, params));
+        return readInput();
+    }
+
+    @Override
+    public Response sendResourcesRead(String resource, JSONObject params) throws IOException {
+        writeAndFlush(capabilities.resourcesRead(resource));
+        return readInput();
     }
 
 }

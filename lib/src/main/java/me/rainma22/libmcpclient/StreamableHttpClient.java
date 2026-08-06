@@ -17,6 +17,7 @@ import me.rainma22.constants.Headers;
 import me.rainma22.constants.MimeTypes;
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
+import me.rainma22.jsonrpc.ToolListResponse;
 import me.rainma22.serversentevents.SSEChunk;
 import me.rainma22.utils.JSONUtils;
 
@@ -83,8 +84,8 @@ public class StreamableHttpClient implements McpClient {
     }
 
     @Override
-    public Response sendListTools() throws IOException {
-        return post(capabilities.listTools());
+    public ToolListResponse sendListTools() throws IOException {
+        return new ToolListResponse(post(capabilities.listTools()));
     }
 
     @Override
@@ -100,5 +101,20 @@ public class StreamableHttpClient implements McpClient {
     @Override
     public void sendNotification(String notif) throws IOException {
         post(new Request(UUID.randomUUID(), notif));
+    }
+
+    @Override
+    public Response sendToolsCall(String tool, JSONObject params) throws IOException {
+        return post(capabilities.ToolsCall(tool, params));
+    }
+
+    @Override
+    public Response sendPromptsGet(String prompt, JSONObject params) throws IOException {
+        return post(capabilities.promptsGet(prompt, params));
+    }
+
+    @Override
+    public Response sendResourcesRead(String resource, JSONObject params) throws IOException {
+        return post(capabilities.resourcesRead(resource));
     }
 }

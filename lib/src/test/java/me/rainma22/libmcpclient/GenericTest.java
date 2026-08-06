@@ -31,8 +31,9 @@ public class GenericTest {
                     client.sendPing(),
                     client.sendInitialize(),
                     client.sendListPrompts(),
-                    client.sendListResources(),
-                    client.sendListTools()).forEach(System.out::println);
+                    client.sendListResources()).forEach(System.out::println);
+            client.sendListTools().getTools().stream()
+                    .forEach(System.out::println);
         } catch (Exception e) {
             fail(e);
         }
@@ -47,8 +48,9 @@ public class GenericTest {
                     client.sendPing(),
                     client.sendInitialize(),
                     client.sendListPrompts(),
-                    client.sendListResources(),
-                    client.sendListTools()).forEach(System.out::println);
+                    client.sendListResources()).forEach(System.out::println);
+            client.sendListTools().getTools().stream()
+                    .forEach(System.out::println);
         } catch (Exception e) {
             fail(e);
         }

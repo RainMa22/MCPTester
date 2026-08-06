@@ -85,7 +85,7 @@ public class Capabilities {
                 }
 
                 @Override
-                public Request getResource(String resourceURI) {
+                public Request resourcesRead(String resourceURI) {
                     return new Request(UUID.randomUUID(), "resources/reads",
                             new JSONObject(
                                     Map.of("uri", resourceURI)));

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
+import me.rainma22.jsonrpc.ToolListResponse;
 /**
  * NOT A STANDARD Client, just a simple client that expects JSON-only responses;
  */
@@ -57,8 +58,8 @@ public class StatelessClient implements McpClient {
     }
 
     @Override
-    public Response sendListTools() throws IOException {
-        return post(capabilities.listTools());
+    public ToolListResponse sendListTools() throws IOException {
+        return new ToolListResponse(post(capabilities.listTools()));
     }
 
     @Override
@@ -74,6 +75,21 @@ public class StatelessClient implements McpClient {
     @Override
     public void sendNotification(String notif) throws IOException {
         post(new Request(UUID.randomUUID(), notif));
+    }
+
+    @Override
+    public Response sendToolsCall(String tool, JSONObject params) throws IOException {
+        return post(capabilities.ToolsCall(tool, params));
+    }
+
+    @Override
+    public Response sendPromptsGet(String prompt, JSONObject params) throws IOException {
+        return post(capabilities.promptsGet(prompt, params));
+    }
+
+    @Override
+    public Response sendResourcesRead(String resource, JSONObject params) throws IOException {
+        return post(capabilities.resourcesRead(resource));
     }
 
 }
