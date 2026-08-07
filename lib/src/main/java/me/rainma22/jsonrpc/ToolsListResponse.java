@@ -6,6 +6,11 @@ import org.json.JSONObject;
 
 import me.rainma22.utils.Toolinfo;
 
+/**
+ * 
+ * ToolsListResponse
+ * TODO: no pagination support yet
+ */
 public class ToolsListResponse extends Response {
 
     public ToolsListResponse(JSONObject obj) {

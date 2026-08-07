@@ -5,7 +5,6 @@ import java.util.List;
 import org.json.JSONObject;
 
 import me.rainma22.utils.PromptInfo;
-import me.rainma22.utils.Toolinfo;
 
 /**
  * 
