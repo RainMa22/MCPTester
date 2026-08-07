@@ -10,8 +10,9 @@ import org.json.JSONObject;
 
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.libmcpclient.McpClientCapabilities;
+import me.rainma22.utils.ClientInfo;
 
-public class McpClientCapabilitiesImplementation20251125 implements McpClientCapabilities {
+public class CapabilitiesImpl20251125 implements McpClientCapabilities {
     private static final String MCP_SESSION_ID_FIELD = "MCP-Session-Id";
 
     @Override
@@ -48,12 +49,7 @@ public class McpClientCapabilitiesImplementation20251125 implements McpClientCap
         req.setParams(new JSONObject(Map.of(
                 "protocolVersion", "2025-11-25",
                 "capabilities", Map.of(),
-                "clientInfo", Map.of(
-                        "name", "testClient",
-                        "title", "Client",
-                        "version", "0.0.1",
-                        "description", "an MCP client",
-                        "icons", List.of()))));
+                "clientInfo", new ClientInfo())));
         return req;
     }
 

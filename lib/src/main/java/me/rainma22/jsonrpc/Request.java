@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
 
 public class Request {
-    private JSONObject object = new JSONObject();
+    protected JSONObject object = new JSONObject();
 
     public Request(Object id) {
         object.put("jsonrpc", "2.0");
