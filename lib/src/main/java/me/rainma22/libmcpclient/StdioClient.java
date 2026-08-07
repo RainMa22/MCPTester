@@ -62,6 +62,14 @@ public class StdioClient implements McpClient {
         return readInput();
     }
 
+    
+
+    @Override
+    public Response sendServerDiscover() throws IOException {
+        writeAndFlush(capabilities.serverDiscover());
+        return readInput();
+    }
+
     @Override
     public ToolsListResponse sendListTools() throws IOException {
         writeAndFlush(capabilities.listTools());

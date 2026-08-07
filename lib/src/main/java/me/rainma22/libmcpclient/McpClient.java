@@ -15,6 +15,8 @@ public interface McpClient {
 
     Response sendInitialize() throws IOException;
 
+    Response sendServerDiscover() throws IOException;
+
     ToolsListResponse sendListTools() throws IOException;
 
     PromptsListResponse sendListPrompts() throws IOException;

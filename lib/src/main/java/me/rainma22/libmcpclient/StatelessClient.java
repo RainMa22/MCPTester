@@ -61,6 +61,12 @@ public class StatelessClient implements McpClient {
         return res;
     }
 
+    
+    @Override
+    public Response sendServerDiscover() throws IOException {
+        return post(capabilities.serverDiscover());
+    }
+
     @Override
     public ToolsListResponse sendListTools() throws IOException {
         return new ToolsListResponse(post(capabilities.listTools()));

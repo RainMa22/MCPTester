@@ -17,6 +17,8 @@ public interface McpClientCapabilities {
 
     Request initialize();
 
+    Request serverDiscover();
+
     Request listTools();
 
     Request listPrompts();
