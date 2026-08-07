@@ -8,9 +8,10 @@ import java.util.UUID;
 
 import org.json.JSONObject;
 
+import me.rainma22.jsonrpc.PromptsListResponse;
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
-import me.rainma22.jsonrpc.ToolListResponse;
+import me.rainma22.jsonrpc.ToolsListResponse;
 
 public class StdioClient implements McpClient {
     private McpClientCapabilities capabilities;
@@ -60,15 +61,15 @@ public class StdioClient implements McpClient {
     }
 
     @Override
-    public ToolListResponse sendListTools() throws IOException {
+    public ToolsListResponse sendListTools() throws IOException {
         writeAndFlush(capabilities.listTools());
-        return new ToolListResponse(readInput());
+        return new ToolsListResponse(readInput());
     }
 
     @Override
-    public Response sendListPrompts() throws IOException {
+    public PromptsListResponse sendListPrompts() throws IOException {
         writeAndFlush(capabilities.listPrompts());
-        return readInput();
+        return new PromptsListResponse(readInput());
     }
 
     @Override

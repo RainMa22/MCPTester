@@ -15,9 +15,10 @@ import org.json.JSONObject;
 
 import me.rainma22.constants.Headers;
 import me.rainma22.constants.MimeTypes;
+import me.rainma22.jsonrpc.PromptsListResponse;
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
-import me.rainma22.jsonrpc.ToolListResponse;
+import me.rainma22.jsonrpc.ToolsListResponse;
 import me.rainma22.serversentevents.SSEChunk;
 import me.rainma22.utils.JSONUtils;
 
@@ -84,13 +85,13 @@ public class StreamableHttpClient implements McpClient {
     }
 
     @Override
-    public ToolListResponse sendListTools() throws IOException {
-        return new ToolListResponse(post(capabilities.listTools()));
+    public ToolsListResponse sendListTools() throws IOException {
+        return new ToolsListResponse(post(capabilities.listTools()));
     }
 
     @Override
-    public Response sendListPrompts() throws IOException {
-        return post(capabilities.listPrompts());
+    public PromptsListResponse sendListPrompts() throws IOException {
+        return new PromptsListResponse(post(capabilities.listPrompts()));
     }
 
     @Override

@@ -12,9 +12,10 @@ import java.util.concurrent.ExecutionException;
 
 import org.json.JSONObject;
 
+import me.rainma22.jsonrpc.PromptsListResponse;
 import me.rainma22.jsonrpc.Request;
 import me.rainma22.jsonrpc.Response;
-import me.rainma22.jsonrpc.ToolListResponse;
+import me.rainma22.jsonrpc.ToolsListResponse;
 /**
  * NOT A STANDARD Client, just a simple client that expects JSON-only responses;
  */
@@ -58,13 +59,13 @@ public class StatelessClient implements McpClient {
     }
 
     @Override
-    public ToolListResponse sendListTools() throws IOException {
-        return new ToolListResponse(post(capabilities.listTools()));
+    public ToolsListResponse sendListTools() throws IOException {
+        return new ToolsListResponse(post(capabilities.listTools()));
     }
 
     @Override
-    public Response sendListPrompts() throws IOException {
-        return post(capabilities.listPrompts());
+    public PromptsListResponse sendListPrompts() throws IOException {
+        return new PromptsListResponse(post(capabilities.listPrompts()));
     }
 
     @Override

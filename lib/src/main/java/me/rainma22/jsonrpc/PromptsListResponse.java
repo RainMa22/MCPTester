@@ -4,20 +4,27 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import me.rainma22.utils.PromptInfo;
 import me.rainma22.utils.Toolinfo;
 
-public class ToolListResponse extends Response {
+/**
+ * 
+ * PromptsListResponse
+ *
+ * TODO: no pagination support yet
+ **/
+public class PromptsListResponse extends Response {
 
-    public ToolListResponse(JSONObject obj) {
+    public PromptsListResponse(JSONObject obj) {
         super(obj);
     }
 
-    public ToolListResponse(Response res) {
+    public PromptsListResponse(Response res) {
         this(res.object);
     }
 
-    public List<Toolinfo> getTools() {
-        return getResult().getJSONArray("tools")
+    public List<PromptInfo> getPrompts() {
+        return getResult().getJSONArray("prompts")
                 .toList()
                 .stream()
                 // .peek(System.out::println)
@@ -25,8 +32,8 @@ public class ToolListResponse extends Response {
                     return JSONObject.wrap(x) instanceof JSONObject ? (JSONObject) JSONObject.wrap(x) : null;
                 })
                 .filter(x -> x != null)
-                .peek((x) -> System.out.println(x.toString(4)))
-                .map((jobj) -> jobj.fromJson(Toolinfo.class))
+                // .peek((x) -> System.out.println(x.toString(4)))
+                .map((jobj) -> jobj.fromJson(PromptInfo.class))
                 .toList();
     }
 

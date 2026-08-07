@@ -4,17 +4,18 @@ import java.io.IOException;
 
 import org.json.JSONObject;
 
+import me.rainma22.jsonrpc.PromptsListResponse;
 import me.rainma22.jsonrpc.Response;
-import me.rainma22.jsonrpc.ToolListResponse;
+import me.rainma22.jsonrpc.ToolsListResponse;
 
 public interface McpClient {
     Response sendPing() throws IOException;
 
     Response sendInitialize() throws IOException;
 
-    ToolListResponse sendListTools() throws IOException;
+    ToolsListResponse sendListTools() throws IOException;
 
-    Response sendListPrompts() throws IOException;
+    PromptsListResponse sendListPrompts() throws IOException;
 
     Response sendListResources() throws IOException;
 
