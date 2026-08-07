@@ -14,8 +14,10 @@ import org.json.JSONObject;
 
 import me.rainma22.jsonrpc.PromptsListResponse;
 import me.rainma22.jsonrpc.Request;
+import me.rainma22.jsonrpc.ResourcesListResponse;
 import me.rainma22.jsonrpc.Response;
 import me.rainma22.jsonrpc.ToolsListResponse;
+
 /**
  * NOT A STANDARD Client, just a simple client that expects JSON-only responses;
  */
@@ -69,8 +71,8 @@ public class StatelessClient implements McpClient {
     }
 
     @Override
-    public Response sendListResources() throws IOException {
-        return post(capabilities.listResources());
+    public ResourcesListResponse sendListResources() throws IOException {
+        return new ResourcesListResponse(post(capabilities.listResources()));
     }
 
     @Override

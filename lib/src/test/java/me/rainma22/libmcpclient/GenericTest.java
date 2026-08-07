@@ -39,12 +39,19 @@ public class GenericTest {
                     System.out.println(v);
                 });
 
+        System.out.println(divider);
         System.out.println("Tools List: ");
         client.sendListTools().getTools().stream()
                 .forEach(System.out::println);
+
         System.out.println(divider);
         System.out.println("Prompts: List");
         client.sendListPrompts().getPrompts().stream()
+                .forEach(System.out::println);
+
+        System.out.println(divider);
+        System.out.println("Resources List");
+        client.sendListResources().getResources().stream()
                 .forEach(System.out::println);
 
     }
