@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import me.rainma22.jsonrpc.PromptsListResponse;
 import me.rainma22.jsonrpc.Request;
+import me.rainma22.jsonrpc.ResourceTemplatesListResponse;
 import me.rainma22.jsonrpc.ResourcesListResponse;
 import me.rainma22.jsonrpc.Response;
 import me.rainma22.jsonrpc.ToolsListResponse;
@@ -77,6 +78,12 @@ public class StdioClient implements McpClient {
     public ResourcesListResponse sendListResources() throws IOException {
         writeAndFlush(capabilities.listResources());
         return new ResourcesListResponse(readInput());
+    }
+
+    @Override
+    public ResourceTemplatesListResponse sendListResourceTemplates() throws IOException {
+        writeAndFlush(capabilities.listResourceTemplates());
+        return new ResourceTemplatesListResponse(readInput());
     }
 
     @Override

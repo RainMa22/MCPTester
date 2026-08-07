@@ -17,6 +17,7 @@ import me.rainma22.constants.Headers;
 import me.rainma22.constants.MimeTypes;
 import me.rainma22.jsonrpc.PromptsListResponse;
 import me.rainma22.jsonrpc.Request;
+import me.rainma22.jsonrpc.ResourceTemplatesListResponse;
 import me.rainma22.jsonrpc.ResourcesListResponse;
 import me.rainma22.jsonrpc.Response;
 import me.rainma22.jsonrpc.ToolsListResponse;
@@ -98,6 +99,11 @@ public class StreamableHttpClient implements McpClient {
     @Override
     public ResourcesListResponse sendListResources() throws IOException {
         return new ResourcesListResponse(post(capabilities.listResources()));
+    }
+
+    @Override
+    public ResourceTemplatesListResponse sendListResourceTemplates() throws IOException {
+        return new ResourceTemplatesListResponse(post(capabilities.listResourceTemplates()));
     }
 
     @Override

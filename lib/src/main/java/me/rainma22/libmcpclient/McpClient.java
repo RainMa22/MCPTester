@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.json.JSONObject;
 
 import me.rainma22.jsonrpc.PromptsListResponse;
+import me.rainma22.jsonrpc.ResourceTemplatesListResponse;
 import me.rainma22.jsonrpc.ResourcesListResponse;
 import me.rainma22.jsonrpc.Response;
 import me.rainma22.jsonrpc.ToolsListResponse;
@@ -19,6 +20,8 @@ public interface McpClient {
     PromptsListResponse sendListPrompts() throws IOException;
 
     ResourcesListResponse sendListResources() throws IOException;
+
+    ResourceTemplatesListResponse sendListResourceTemplates() throws IOException;
 
     void sendNotification(String notif) throws IOException;
 

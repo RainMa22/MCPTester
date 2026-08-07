@@ -23,6 +23,8 @@ public interface McpClientCapabilities {
 
     Request listResources();
 
+    Request listResourceTemplates();
+
     Request ToolsCall(String tool, JSONObject args);
 
     Request promptsGet(String prompt, JSONObject args);

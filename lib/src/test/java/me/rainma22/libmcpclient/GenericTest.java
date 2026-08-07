@@ -53,6 +53,8 @@ public class GenericTest {
         System.out.println("Resources List");
         client.sendListResources().getResources().stream()
                 .forEach(System.out::println);
+        client.sendListResourceTemplates().getResourceTemplates().stream()
+                .forEach(System.out::println);
 
     }
 

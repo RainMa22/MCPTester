@@ -69,6 +69,11 @@ public class Capabilities {
                 }
 
                 @Override
+                public Request listResourceTemplates() {
+                    return new Request(UUID.randomUUID(), "resources/templates/list");
+                }
+
+                @Override
                 public Request ToolsCall(String tool, JSONObject args) {
                     return new Request(UUID.randomUUID(), "tools/call",
                             new JSONObject(Map.of(
