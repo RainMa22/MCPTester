@@ -10,7 +10,6 @@ import me.rainma22.utils.ResourceInfo;
  * 
  * PromptsListResponse
  *
- * TODO: no pagination support yet
  **/
 public class ResourcesListResponse extends Response {
 

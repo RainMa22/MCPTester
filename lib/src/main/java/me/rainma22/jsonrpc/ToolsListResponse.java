@@ -9,7 +9,6 @@ import me.rainma22.utils.Toolinfo;
 /**
  * 
  * ToolsListResponse
- * TODO: no pagination support yet
  */
 public class ToolsListResponse extends Response {
 

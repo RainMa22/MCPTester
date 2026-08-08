@@ -31,6 +31,15 @@ public class StdioClient implements McpClient {
         out.flush();
     }
 
+    private Response writeFlushThenRead(Request s) throws IOException {
+        writeAndFlush(s);
+        var res = readInput();
+        if (res.isPaginated()) {
+            res.composeWith(writeFlushThenRead(s));
+        }
+        return res;
+    }
+
     private Response readInput() throws IOException {
         while (true) {
             while (!scanner.hasNextLine()) {
@@ -52,46 +61,37 @@ public class StdioClient implements McpClient {
 
     @Override
     public Response sendPing() throws IOException {
-        writeAndFlush(capabilities.ping());
-        return readInput();
+        return writeFlushThenRead(capabilities.ping());
     }
 
     @Override
     public Response sendInitialize() throws IOException {
-        writeAndFlush(capabilities.initialize());
-        return readInput();
+        return writeFlushThenRead(capabilities.initialize());
     }
-
-    
 
     @Override
     public Response sendServerDiscover() throws IOException {
-        writeAndFlush(capabilities.serverDiscover());
-        return readInput();
+        return writeFlushThenRead(capabilities.serverDiscover());
     }
 
     @Override
     public ToolsListResponse sendListTools() throws IOException {
-        writeAndFlush(capabilities.listTools());
-        return new ToolsListResponse(readInput());
+        return new ToolsListResponse(writeFlushThenRead(capabilities.listTools()));
     }
 
     @Override
     public PromptsListResponse sendListPrompts() throws IOException {
-        writeAndFlush(capabilities.listPrompts());
-        return new PromptsListResponse(readInput());
+        return new PromptsListResponse(writeFlushThenRead(capabilities.listPrompts()));
     }
 
     @Override
     public ResourcesListResponse sendListResources() throws IOException {
-        writeAndFlush(capabilities.listResources());
-        return new ResourcesListResponse(readInput());
+        return new ResourcesListResponse(writeFlushThenRead(capabilities.listResources()));
     }
 
     @Override
     public ResourceTemplatesListResponse sendListResourceTemplates() throws IOException {
-        writeAndFlush(capabilities.listResourceTemplates());
-        return new ResourceTemplatesListResponse(readInput());
+        return new ResourceTemplatesListResponse(writeFlushThenRead(capabilities.listResourceTemplates()));
     }
 
     @Override
@@ -101,20 +101,17 @@ public class StdioClient implements McpClient {
 
     @Override
     public Response sendToolsCall(String tool, JSONObject params) throws IOException {
-        writeAndFlush(capabilities.ToolsCall(tool, params));
-        return readInput();
+        return writeFlushThenRead(capabilities.ToolsCall(tool, params));
     }
 
     @Override
     public Response sendPromptsGet(String prompt, JSONObject params) throws IOException {
-        writeAndFlush(capabilities.promptsGet(prompt, params));
-        return readInput();
+        return writeFlushThenRead(capabilities.promptsGet(prompt, params));
     }
 
     @Override
     public Response sendResourcesRead(String resource, JSONObject params) throws IOException {
-        writeAndFlush(capabilities.resourcesRead(resource));
-        return readInput();
+        return writeFlushThenRead(capabilities.resourcesRead(resource));
     }
 
 }

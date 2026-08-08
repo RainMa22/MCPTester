@@ -71,7 +71,14 @@ public class StreamableHttpClient implements McpClient {
     }
 
     private Response post(Request r) throws IOException {
-        return post(r.toString());
+        var res = post(r.toString());
+        while (res.isPaginated()) {
+            var newParams = r.getParams();
+            newParams.put("cursor", res.nextCursor());
+            r.setParams(newParams);
+            res.composeWith(post(r.toString()));
+        }
+        return res;
     }
 
     @Override
