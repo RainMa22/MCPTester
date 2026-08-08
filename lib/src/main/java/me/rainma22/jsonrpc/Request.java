@@ -22,6 +22,16 @@ public class Request {
         setParams(params);
     }
 
+    public static Request fromJSON(JSONObject obj) {
+        var req = new Request("");
+        req.object = obj;
+        return req;
+    }
+
+    public String getId(){
+        return object.optString("id");
+    }
+
     public void setMethod(String method) {
         object.put("method", method);
     }
